@@ -49,10 +49,9 @@ jQuery(function($) {
       },
       multiple: false
     });
-
+   
     file_frame.on( 'select', function() {
       attachment = file_frame.state().get('selection').first().toJSON();
-
       that.parent().find('input:hidden').attr('value', attachment.id);
       that.parent().find('img.image-preview').attr('src', attachment.sizes.thumbnail.url);
     });
