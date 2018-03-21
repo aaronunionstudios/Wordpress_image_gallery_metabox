@@ -13,6 +13,13 @@ In your template inside a loop, grab the IDs of all the images with the followin
 $images = get_post_meta($post->ID, 'vdw_gallery_id', true);
 Then you can loop through the IDs and call wp_get_attachment_link or wp_get_attachment_image to display the images with or without a link respectively:
  */
+function gallery_metabox_add_settings_link( $links ) {
+  $settings_link = '<a href="options-general.php?page=gallery_metabox_settings">' . __( 'Settings' ) . '</a>';
+  array_push( $links, $settings_link );
+  return $links;
+}
+$plugin = plugin_basename( __FILE__ );
+add_filter( "plugin_action_links_$plugin", 'gallery_metabox_add_settings_link' );
 
 function gallery_metabox_enqueue($hook)
 {
@@ -68,7 +75,7 @@ add_action('admin_menu', 'gallery_metabox_menu');
 
 function gallery_metabox_menu()
 {
-    add_options_page('Gallery Metabox', 'Gallery Metabox', 'manage_options', 'gallery_metabox_identifier', 'gallery_metabox_options');
+    add_options_page('Gallery Metabox', 'Gallery Metabox', 'manage_options', 'gallery_metabox_settings', 'gallery_metabox_options');
 }
 
 function gallery_metabox_options()
@@ -118,7 +125,7 @@ function gallery_metabox_options()
               }
           }
           echo ('<input type="checkbox" name="gmb_posttype[]" value="' . $value . '"' . $checked . ' />');
-          echo ('post type = ' . $value . '<br>');
+          echo ( $value . '<br>');
       }
       ?>
 
